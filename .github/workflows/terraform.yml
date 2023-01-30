@@ -1,16 +1,17 @@
-name: 'Terraform-Apply'
+
+
+name: 'Terraform'
 
 on:
   push:
-    branches: [ "main" ]
-    
+    branches: [ "master" ]
   pull_request:
 
   workflow_dispatch:
 
 jobs:
   terraform:
-    name: 'Terraform-Apply'
+    name: 'Terraform'
     runs-on: ubuntu-latest
 
     env:
@@ -42,9 +43,10 @@ jobs:
           }
         write-mode: overwrite
 
-    - name: List Contents
+    - name: Verify Backend.tf
       run: |
         ls -R
+        cat backend.tf
     - name: Debug
       run: echo "$GITHUB_REF"
 
@@ -54,6 +56,7 @@ jobs:
       env:
         TF_VAR_environment: "dev"
         TF_VAR_region: "us-east-1"
+        TF_VAR_cidr_block   = "10.0.1.0/24"
 
     - name: Terraform Apply QA
       if: github.ref == 'refs/heads/qa'
@@ -61,10 +64,12 @@ jobs:
       env:
         TF_VAR_environment: "qa"
         TF_VAR_region: "us-east-2"
+        TF_VAR_cidr_block = "10.0.2.0/24"
         
     - name: Terraform Apply Prod
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/master'
       run: make prod
       env:
         TF_VAR_environment: "prod"
         TF_VAR_region: "us-west-2"
+        TF_VAR_cidr_block = "10.0.3.0/24"
