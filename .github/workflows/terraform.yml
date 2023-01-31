@@ -1,5 +1,4 @@
 
-
 name: 'Terraform'
 
 on:
@@ -56,7 +55,7 @@ jobs:
       env:
         TF_VAR_environment: "dev"
         TF_VAR_region: "us-east-1"
-        TF_VAR_cidr_block   = "10.0.1.0/24"
+        TF_VAR_cidr_block = "10.0.1.0/24"
 
     - name: Terraform Apply QA
       if: github.ref == 'refs/heads/qa'
@@ -73,4 +72,5 @@ jobs:
         TF_VAR_environment: "prod"
         TF_VAR_region: "us-west-2"
         TF_VAR_cidr_block = "10.0.3.0/24"
+
 
