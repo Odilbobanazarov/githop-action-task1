@@ -73,3 +73,4 @@ jobs:
         TF_VAR_environment: "prod"
         TF_VAR_region: "us-west-2"
         TF_VAR_cidr_block = "10.0.3.0/24"
+
